@@ -1,0 +1,18 @@
+.navbar {
+  width: 100%;
+  background-color: #f0f0f0;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.navbar-title {
+  color: #000000;
+  font-size: 24px;
+}
+
+/* .navbar-title:hover,
+.navbar-title:active {
+  color: #22d1ee;
+} */
