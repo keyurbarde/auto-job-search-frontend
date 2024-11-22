@@ -59,11 +59,16 @@ const Search = () => {
   const [chosenSkills, setChosenSkills] = useState(() => new Set());
   const [customSkill, setCustomSkill] = useState("");
   const [showListings, setShowListings] = useState(false);
+  const [title, setTitle] = useState("");
+  const [location, setLocation] = useState("");
+  const [jobListings, setJobListings] = useState();
   let { state } = useLocation();
 
   useEffect(() => {
     console.log(state);
-    setSkills(state.skills.skill);
+    const skillsArr = [...state.skills.skill, ...state.skills.education];
+    setSkills(skillsArr);
+    setTitle(state.domain_info[1]);
   }, []);
 
   const onSkillClick = (skill) => {
@@ -105,27 +110,36 @@ const Search = () => {
     setCustomSkill("");
   };
 
+  const onTitleChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const onLocationChange = (e) => {
+    setLocation(e.target.value);
+  };
+
   const onContinue = () => {
-    if (chosenSkills.size < 3) {
+    if (chosenSkills.size < 3 || !title || !location) {
       return;
     }
     async function sendChosenSkills() {
       try {
-        // Convert Set to Array and stringify it for the request body
-        const arr = JSON.stringify(Array.from(chosenSkills));
+        const skills = Array.from(chosenSkills);
 
-        // Send POST request with JSON body
+        const sendObj = JSON.stringify({ skills, title, location });
+
         const res = await fetch("http://localhost:8000/post-skills/", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json", // Specify that we're sending JSON data
+            "Content-Type": "application/json",
           },
-          body: arr, // Send the JSON string
+          body: sendObj,
         });
 
         if (res.ok) {
           const data = await res.json();
           console.log(data);
+          setJobListings(data);
           setShowListings(true);
         } else {
           const errorData = await res.json();
@@ -143,7 +157,13 @@ const Search = () => {
   };
 
   if (showListings) {
-    return <Listings chosenSkills={chosenSkills} onBack={onBackFromListings} />;
+    return (
+      <Listings
+        chosenSkills={chosenSkills}
+        onBack={onBackFromListings}
+        jobListings={jobListings}
+      />
+    );
   }
 
   return (
@@ -181,6 +201,17 @@ const Search = () => {
         <label>Add manually</label>
         <input type="text" onChange={onCustomSkillChange}></input>
         <button type="submit">Add Skill</button>
+      </form>
+
+      <form>
+        <label>Job Title</label>
+        <input
+          type="text"
+          onChange={onTitleChange}
+          defaultValue={title}
+        ></input>
+        <label>Location</label>
+        <input type="text" onChange={onLocationChange}></input>
       </form>
     </div>
   );
