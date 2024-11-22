@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <div className="navbar">
       <Link to="/" style={{ textDecoration: "none" }}>
-        <h1 className="navbar-title">KwikJobs</h1>
+        <h1 className="navbar-title">CV Compass</h1>
       </Link>
     </div>
   );

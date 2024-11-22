@@ -1,0 +1,53 @@
+.listing-container {
+  width: 100%;
+  background-color: #ffffff;
+  margin-top: 16px;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0px 0px 8px #eee;
+}
+
+.listing-title-company h2 {
+  font-size: 20px;
+  margin-bottom: 4px;
+  font-weight: 600;
+  color: #062743;
+}
+
+.listing-title-company p {
+  font-weight: 500;
+  font-size: 14px;
+  color: #444;
+}
+
+.listing-rest {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.listing-loc-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 24px;
+  font-size: 14px;
+  color: #444;
+}
+
+.listing-url a {
+  padding: 8px;
+  background-color: #113a5d;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.listing-ext-icon {
+  height: 28px;
+  width: 28x;
+}

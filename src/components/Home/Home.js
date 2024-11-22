@@ -2,7 +2,9 @@ import { useState } from "react";
 import "./Home.css";
 import { Link } from "react-router-dom";
 import uploadSVG from "../../svgs/upload.svg";
+import cross from "../../svgs/cross.svg";
 import rightArrowSVG from "../../svgs/rightArrow.svg";
+import Indeed_logo from "../../svgs/Indeed_logo.png";
 
 const Home = () => {
   const [file, setFile] = useState();
@@ -45,42 +47,59 @@ const Home = () => {
   };
 
   return (
-    <div className="home-container">
-      <h1 className="home-heading">
-        Find <span>Personalized</span> Job Listings in 3 steps
-      </h1>
+    <div className="home-outer-container">
+      <div className="home-container">
+        <h1 className="home-heading">
+          Find <span className="personalized-span">Personalized</span> Job
+          Listings in 2 steps
+        </h1>
 
-      <div className="upload-container">
-        {file ? (
-          <div className="upload-after-file">
-            <Link
-              to="/search"
-              style={{ textDecoration: "none" }}
-              state={extractedData}
-            >
-              <button className="upload-continue-btn btn">
-                <span>Continue with {file.name}</span>
-                <img src={rightArrowSVG} />
+        <div className="upload-container">
+          {file ? (
+            <div className="upload-after-file">
+              <Link
+                to="/search"
+                style={{ textDecoration: "none" }}
+                state={extractedData}
+              >
+                <button className="upload-continue-btn btn">
+                  <span>Continue with {file.name}</span>
+                  <img src={rightArrowSVG} />
+                </button>
+              </Link>
+              <button
+                className="upload-cancel-btn btn"
+                onClick={() => setFile()}
+              >
+                <img src={cross} alt="X"></img>
               </button>
-            </Link>
-            <button className="upload-cancel-btn btn" onClick={() => setFile()}>
-              X
-            </button>
-          </div>
-        ) : (
-          <div className="upload-cv-btn">
-            <label for="upload-cv-input" className="input-label btn">
-              <img src={uploadSVG} />
-              <span>Upload your CV</span>
-            </label>
-            <input
-              id="upload-cv-input"
-              type="file"
-              onChange={handleFileSet}
-              hidden
-            />
-          </div>
-        )}
+            </div>
+          ) : (
+            <div className="upload-cv-btn">
+              <label for="upload-cv-input" className="input-label btn">
+                <img src={uploadSVG} />
+                <span>Upload your CV</span>
+              </label>
+              <input
+                id="upload-cv-input"
+                type="file"
+                onChange={handleFileSet}
+                accept="application/pdf"
+                hidden
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="border"></div>
+        <div className="choose-info-box">
+          <p>Select from the skills extracted</p>
+        </div>
+        <div className="border"></div>
+        <div className="get-results-box">
+          <p>Get Job Listings related to your skills from</p>
+          <img src={Indeed_logo} alt="" className="company-logo"></img>
+        </div>
       </div>
     </div>
   );

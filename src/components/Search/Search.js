@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Skill from "../Skill/Skill";
 import Listings from "../Listings/Listings";
 import { useLocation } from "react-router-dom";
+import "./Search.css";
+import loader from "../../svgs/loader.svg";
+import rightArrowSVG from "../../svgs/rightArrow.svg";
 
 const dummySkills = [
   "ReactJs",
@@ -62,13 +65,16 @@ const Search = () => {
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [jobListings, setJobListings] = useState();
+  const [isLoading, setIsLoading] = useState();
   let { state } = useLocation();
+  const addSkillInputRef = useRef("");
 
   useEffect(() => {
     console.log(state);
     const skillsArr = [...state.skills.skill, ...state.skills.education];
-    setSkills(skillsArr);
-    setTitle(state.domain_info[1]);
+    const uniqueSkills = [...new Set(skillsArr)];
+    setSkills(uniqueSkills);
+    setTitle(state.domain_info[1][0]);
   }, []);
 
   const onSkillClick = (skill) => {
@@ -108,6 +114,7 @@ const Search = () => {
     }
     setSkills([...skills, customSkill]);
     setCustomSkill("");
+    addSkillInputRef.current.value = "";
   };
 
   const onTitleChange = (e) => {
@@ -127,7 +134,8 @@ const Search = () => {
         const skills = Array.from(chosenSkills);
 
         const sendObj = JSON.stringify({ skills, title, location });
-
+        console.log(skills, title, location);
+        setIsLoading(true);
         const res = await fetch("http://localhost:8000/post-skills/", {
           method: "POST",
           headers: {
@@ -135,7 +143,7 @@ const Search = () => {
           },
           body: sendObj,
         });
-
+        setIsLoading(false);
         if (res.ok) {
           const data = await res.json();
           console.log(data);
@@ -156,6 +164,10 @@ const Search = () => {
     setShowListings(false);
   };
 
+  if (isLoading) {
+    return <img className="loader" src={loader}></img>;
+  }
+
   if (showListings) {
     return (
       <Listings
@@ -167,52 +179,68 @@ const Search = () => {
   }
 
   return (
-    <div>
-      <h1>Choose your skills</h1>
+    <div className="outlet-container">
+      <div className="search-container">
+        <h1 className="search-choose-heading">Choose your skills</h1>
 
-      <div className="search-skills-container">
-        {skills.map((skill, idx) => (
-          <Skill
-            key={idx}
-            isSelected={chosenSkills.has(skill)}
-            onClick={() => onSkillClick(skill)}
-          >
-            {skill}
-          </Skill>
-        ))}
+        <div className="search-skills-container">
+          {skills.map((skill, idx) => (
+            <Skill
+              key={idx}
+              isSelected={chosenSkills.has(skill)}
+              onClick={() => onSkillClick(skill)}
+            >
+              {skill}
+            </Skill>
+          ))}
+        </div>
+
+        <button className="btn skill-btn" onClick={() => OnClearChosenSkills()}>
+          Clear All
+        </button>
+        <button className="btn skill-btn" onClick={() => OnChooseAllSkills()}>
+          Select All
+        </button>
+
+        <form className="add-skill-form" onSubmit={onAddCustomSkill}>
+          <input
+            ref={addSkillInputRef}
+            type="text"
+            onChange={onCustomSkillChange}
+            className="search-input"
+            placeholder="E.g. React, Javascript, Python"
+          ></input>
+          <button type="submit" className="btn">
+            Add Skill
+          </button>
+        </form>
+
+        <h1 className="job-details-heading">Enter Job Details</h1>
+
+        <form className="job-details-form">
+          <div className="job-text-container">
+            <label>Job Title</label>
+            <input
+              type="text"
+              onChange={onTitleChange}
+              defaultValue={title}
+              className="search-input"
+            ></input>
+          </div>
+          <div className="job-text-container">
+            <label>Location</label>
+            <input
+              type="text"
+              onChange={onLocationChange}
+              className="search-input"
+            ></input>
+          </div>
+        </form>
+        <button className="upload-continue-btn btn" onClick={onContinue}>
+          <span>Continue </span>
+          <img src={rightArrowSVG} />
+        </button>
       </div>
-
-      <button className="btn" onClick={() => OnClearChosenSkills()}>
-        Clear All
-      </button>
-      <button className="btn" onClick={() => OnChooseAllSkills()}>
-        Select All
-      </button>
-      <button
-        className="btn"
-        onClick={() => {
-          onContinue();
-        }}
-      >
-        Continue
-      </button>
-
-      <form onSubmit={onAddCustomSkill}>
-        <label>Add manually</label>
-        <input type="text" onChange={onCustomSkillChange}></input>
-        <button type="submit">Add Skill</button>
-      </form>
-
-      <form>
-        <label>Job Title</label>
-        <input
-          type="text"
-          onChange={onTitleChange}
-          defaultValue={title}
-        ></input>
-        <label>Location</label>
-        <input type="text" onChange={onLocationChange}></input>
-      </form>
     </div>
   );
 };

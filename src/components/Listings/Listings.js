@@ -181,25 +181,27 @@ const Listings = ({ chosenSkills, onBack, jobListings }) => {
   }, []);
 
   return (
-    <>
-      <button className="btn" onClick={onBack}>
-        Back
-      </button>
+    <div className="outlet-container">
+      <div className="listings-page-container">
+        <button className="btn listings-back-btn" onClick={onBack}>
+          Back
+        </button>
 
-      <div className="skills-container">
-        {Array.from(chosenSkills).map((skill, idx) => (
-          <Skill key={idx} isSelected={false}>
-            {skill}
-          </Skill>
-        ))}
-      </div>
+        <div className="listings-skills-container">
+          {Array.from(chosenSkills).map((skill, idx) => (
+            <Skill key={idx} isSelected={false}>
+              {skill}
+            </Skill>
+          ))}
+        </div>
 
-      <div className="listings-container">
-        {listings.map((listing, idx) => (
-          <SingleListing listing={listing} key={idx} />
-        ))}
+        <div className="listings-container">
+          {listings.map((listing, idx) => (
+            <SingleListing listing={listing} key={idx} />
+          ))}
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

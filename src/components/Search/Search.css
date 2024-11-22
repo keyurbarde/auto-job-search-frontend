@@ -1,0 +1,89 @@
+.search-container {
+  margin: auto 16px;
+}
+
+.search-choose-heading {
+  padding-top: 48px;
+  color: #062743;
+}
+
+.search-skills-container {
+  margin-bottom: 8px;
+  margin-top: 24px;
+}
+
+.skill-btn {
+  margin-right: 4px;
+}
+
+.add-skill-form {
+  display: flex;
+  margin-top: 24px;
+  margin-bottom: 48px;
+}
+
+.add-skill-form input {
+  border: none;
+  border-radius: 4px;
+  background-color: #ffffff;
+  margin-right: 4px;
+  width: 300px;
+  padding-left: 8px;
+  box-shadow: 0px 0px 8px #dbdbdb;
+}
+
+.job-details-form {
+  margin-top: 0px;
+  margin-bottom: 24px;
+  max-width: 100%;
+  display: block;
+}
+
+.job-text-container {
+  display: inline-block;
+  max-width: fit-content;
+  margin-top: 16px;
+}
+
+.job-details-heading {
+  margin-top: 0px;
+  color: #062743;
+}
+
+.job-text-container input {
+  padding: 8px 8px;
+  border: none;
+  border-radius: 4px;
+  background-color: #fff;
+  display: block;
+  margin-right: 32px;
+  margin-top: 4px;
+  width: 300px;
+  display: block;
+  box-shadow: 0px 0px 8px #dbdbdb;
+}
+
+.job-text-container label {
+  font-size: 14px;
+  color: #5e5e5e;
+  font-weight: 500;
+  display: block;
+}
+
+.search-continue-btn {
+  font-size: 20px;
+  font-weight: 600;
+  color: white;
+  font-weight: 600;
+  font-size: 24px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #062743;
+}
+
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: #fff;
+  background-color: #f5f5f7;
 }
 
 .btn {
@@ -16,6 +16,6 @@ body {
   cursor: pointer;
   transition: 0.2s ease-out;
   padding: 8px 12px;
-  background-color: #0e0e0e;
+  background-color: #062743;
   color: white;
 }

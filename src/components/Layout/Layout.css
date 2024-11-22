@@ -1,3 +1,4 @@
 .outlet-container {
-  height: 100vh;
+  max-width: 1000px;
+  margin: auto auto;
 }

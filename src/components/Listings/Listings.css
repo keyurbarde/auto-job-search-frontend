@@ -1,0 +1,14 @@
+.listings-page-container {
+  margin: auto 16px;
+}
+
+.listings-back-btn {
+  margin-top: 32px;
+  margin-bottom: 16px;
+}
+
+.listings-skills-container {
+  padding-bottom: 32px;
+  border-bottom: 1px solid #c9c9c9;
+  margin-bottom: 32px;
+}
